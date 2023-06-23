@@ -23,16 +23,16 @@ jobs:
       displayName: Add conda to PATH
     - bash: sudo chown -R $USER $CONDA
       displayName: Take ownership of conda installation
-    - bash: conda create --name flake8_env --yes flake8
-      displayName: Install flake8
+    - bash: conda create --name ruff_env --yes ruff
+      displayName: Install Ruff
     - bash: |
         if [[ $BUILD_SOURCEVERSIONMESSAGE =~ \[lint\ skip\] ]]; then
           # skip linting
           echo "Skipping linting"
           exit 0
         else
-          source activate flake8_env
-          flake8 --exclude="joblib/externals/*" --per-file-ignores="examples/*: E402"
+          source activate ruff_env
+          ruff check .
         fi
       displayName: Run linting
 
